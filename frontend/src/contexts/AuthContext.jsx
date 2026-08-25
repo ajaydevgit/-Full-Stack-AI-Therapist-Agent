@@ -1,7 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_BASE || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+// Intelligent API Base URL formatting (supports https://backend.onrender.com or with /api)
+const rawBase = import.meta.env.VITE_API_BASE;
+const API_BASE = rawBase
+  ? (rawBase.replace(/\/+$/, '').endsWith('/api') ? rawBase.replace(/\/+$/, '') : `${rawBase.replace(/\/+$/, '')}/api`)
+  : (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
 
 const AuthContext = createContext(null);
 

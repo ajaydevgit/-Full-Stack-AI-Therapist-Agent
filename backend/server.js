@@ -16,10 +16,12 @@ const PORT = process.env.PORT || 5000;
 // Initialize Gemini on startup
 initGemini();
 
-// Middleware
+// Middleware - CORS enabled for Vercel, localhost, and custom domains
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:4173'],
+  origin: true, // Allow all origins in production/cross-hosting
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json({ limit: '10mb' }));
 
